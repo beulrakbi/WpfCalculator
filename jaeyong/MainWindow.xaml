@@ -1,0 +1,41 @@
+﻿<Window x:Class="jaeyong.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:jaeyong"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <!-- 행 정의 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 계산 결과 Display -->
+        <TextBox x:Name="Display"
+                 FontSize="32"
+                 TextAlignment="Right"
+                 IsReadOnly="True"
+                 Margin="10"/>
+    
+        <!-- 버튼 영역 -->
+        <UniformGrid Grid.Row ="1"
+                     Columns="4"
+                     Margin="10"
+                     >
+            <Button Content="7"
+                    Click="Button_Click"/>
+            <Button Content="8"
+                    Click="Button_Click"/>
+            <Button Content="9"
+                    Click="Button_Click"/>
+            <Button Content="X"
+                    Click="Button_Click"/>
+            
+            
+        </UniformGrid>
+    </Grid>
+</Window>
+    
