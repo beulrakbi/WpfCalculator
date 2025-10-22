@@ -7,111 +7,294 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="320">
     <Grid>
-        
-        
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="SidebarColumn" Width="0"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>-->
-        
-        
-        <!--<Border Grid.Column="0"
-                Background="#FFE8E8E8"
-                BorderBrush="#FFCCCCCC"
-                BorderThickness="0, 0, 1, 0"/>-->
-
         <Grid>
             <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+                <RowDefinition Height="31*"/>
+                <RowDefinition Height="453*"/>
+            </Grid.RowDefinitions>
 
-            <Border x:Name="SidebarPanel"
+            <Grid Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border x:Name="SidebarPanel"
                     Grid.Row="0" Grid.RowSpan="2"
                     Width="250"
                     HorizontalAlignment="Left"
-                    Background="DarkGray"
+                    Background="White"
                     Panel.ZIndex="1"
                     Visibility="Collapsed">
-            </Border>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0"
+                            x:Name="HamburgerButton"
+                            Click="MenuButton_Click"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            HorizontalAlignment="Left"
+                            Panel.ZIndex="0">
+                            <Image Source="C:\Users\황재용\Desktop\Img\hamburger.png"
+                                Width="20"
+                                Height="20"
+                                Margin="10"/>
+                        </Button>
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                            <StackPanel >
+                                <TextBlock Text="계산기"
+                                       FontWeight="Bold"/>
+                                <Button Content="표준"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0" 
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    Width="250"
+                                    />
+                                <Button Content="공학용"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15" 
+                                    Height="45" 
+                                    />
+                                <Button Content="그래프"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="프로그래머"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="날짜 계산" 
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <TextBlock Text="변환기"
+                                       FontWeight="Bold"/>
+                                <Button Content="부피"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="길이"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="무게 및 질량"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="온도"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="에너지"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="면적"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="속도"
+                                    HorizontalContentAlignment="Left"
+                                    BorderThickness="0"
+                                    Background="Transparent"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                                <Button Content="시간"
+                                    HorizontalContentAlignment="Left"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    FontSize="15"
+                                    Height="45"
+                                    />
+                            </StackPanel>
+                        </ScrollViewer>
+                        <Button Grid.Row="2"
+                            Content="설정"
+                            HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            FontSize="15"
+                            Height="45"
+                            />
+                    </Grid>
+                </Border>
 
-            <Button Grid.Row="0"
-                    x:Name="HamburgerButton"
-                    Click="MenuButton_Click"
-                    Background="White"
-                    BorderThickness="0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Panel.ZIndex="2">
-                <Image Source="C:\Users\황재용\Desktop\Img\hamburger.png"
-                        Width="20"
-                        Height="20"
-                        Margin="10"/>
-
-            </Button>
-            
-            
-        <StackPanel Grid.Row="0">
-
-            <StackPanel Orientation="Horizontal">
-                <Button Click="MenuButton_Click" 
+                <Border x:Name="HistoryPanel"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Width="320"
+                        Height="300"
+                        HorizontalAlignment="Center"
                         Background="White"
-                        BorderThickness="0">
-                    <Image Source="C:\Users\황재용\Desktop\Img\hamburger.png"
-                           Width="20"
-                           Height="20"
-                           Margin="10"/>
-                </Button>
+                        Panel.ZIndex="1"
+                        Visibility="Collapsed"
+                        VerticalAlignment="Bottom"
+                        >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                <TextBlock Text="표준"
-                           FontSize="15"
-                           Margin="10"
-                           VerticalAlignment="Center"/>
-            </StackPanel>
 
-            <TextBox x:Name="Display"
-                     FontSize="32"
-                     TextAlignment="Right"
-                     IsReadOnly="True"
-                     Margin="10"/>
-        </StackPanel>
 
-        <UniformGrid Grid.Row ="1"
-                     Columns="4"
-                     Margin="10">
-            <Button Content="%" Click="Operator_Click"/>
-            <Button Content="CE" Click="ClearEntry_Click"/>
-            <Button Content="C" Click="Clear_Click"/>
-            <Button Click="Delete_Click">
-                <Image Source="C:\Users\황재용\Desktop\Img\cancel.png" Width="20" Height="20"/>
-            </Button>
+                        <ScrollViewer Grid.Row="0"
+                                      VerticalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="HistoryStackPanel">
+                            </StackPanel>
+                        </ScrollViewer>
 
-            <Button Content="1/x" Click="Reciprocal_Click"/>
-            <Button Content="x²" Click="Square_Click"/>
-            <Button Content="²√x" Click="SquareRoot_Click"/>
-            <Button Content="/" Click="Operator_Click"/>
+                        <Button Grid.Row="1"
+                                Grid.RowSpan="2"
+                                Content="Clear"
+                                Click="ClearHistory_Click"
+                                HorizontalAlignment="Right"
+                                BorderThickness="0"
+                                Margin="30, 10"
+                                Background="Transparent"
+                                VerticalAlignment="Bottom"
+                               />
+                    </Grid>
+                </Border>
 
-            <Button Content="7" Click="Button_Click"/>
-            <Button Content="8" Click="Button_Click"/>
-            <Button Content="9" Click="Button_Click"/>
-            <Button Content="X" Click="Operator_Click"/>
+                <StackPanel Grid.Row="0">
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-            <Button Content="4" Click="Button_Click"/>
-            <Button Content="5" Click="Button_Click"/>
-            <Button Content="6" Click="Button_Click"/>
-            <Button Content="-" Click="Operator_Click"/>
+                        <Button Grid.Column="0" 
+                                Click="MenuButton_Click" 
+                                Background="Transparent" 
+                                BorderThickness="0">
+                            <Image Source="C:\Users\황재용\Desktop\Img\hamburger.png"
+                                   Width="20" Height="20" Margin="10"/>
+                        </Button>
 
-            <Button Content="1" Click="Button_Click"/>
-            <Button Content="2" Click="Button_Click"/>
-            <Button Content="3" Click="Button_Click"/>
-            <Button Content="+" Click="Operator_Click"/>
+                        <TextBlock Grid.Column="1" 
+                                   Text="표준"
+                                   HorizontalAlignment="Left"
+                                   FontSize="15"
+                                   Margin="10"
+                                   VerticalAlignment="Center"/>
 
-            <Button Content="+/-" Click="Operator_Click"/>
-            <Button Content="0" Click="Button_Click"/>
-            <Button Content="." Click="Operator_Click"/>
-            <Button Content="=" Click="Result_Click" Background="#0078D7" Foreground="White"/>
+                        <Button Content="기록"
+                                Grid.Column="2" 
+                                HorizontalAlignment="Right"
+                                FontSize="15"
+                                Margin="10"
+                                Click="HistoryButton_Click" 
+                                />
+                    </Grid>
 
-        </UniformGrid>
+                    <TextBox x:Name="ExpressionDisplay"
+                             Text="{Binding currentExpression}"
+                             HorizontalAlignment="Right"
+                             FontSize="20"
+                             IsReadOnly="True"
+                             Margin="0, 0, 10, 0"
+                             BorderThickness="0"/>
+                    <TextBox x:Name="ResultDisplay"
+                             FontSize="32"
+                             TextAlignment="Right"
+                             IsReadOnly="True"
+                             Margin="10"
+                             BorderThickness="0"/>
+                    <UniformGrid Grid.Row="1"
+                                 Columns="6"
+                                 Margin="3"
+                                 Width="290">
+                        <Button Content="MC" />
+                        <Button Content="MR" />
+                        <Button Content="M+" />
+                        <Button Content="M-" />
+                        <Button Content="MS" />
+                        <Button Content="M▽" />
+                    </UniformGrid>
+                </StackPanel>
+
+
+                <UniformGrid Grid.Row ="1"
+                         Columns="4"
+                         Margin="10">
+                    
+                    <Button Content="%" Click="Operator_Click"/>
+                    <Button Content="CE" Click="ClearEntry_Click"/>
+                    <Button Content="C" Click="Clear_Click"/>
+                    <Button Click="Delete_Click">
+                        <Image Source="C:\Users\황재용\Desktop\Img\cancel.png" Width="20" Height="20"/>
+                    </Button>
+                    
+                    <Button Content="1/x" Click="Reciprocal_Click"/>
+                    <Button Content="x²" Click="Square_Click"/>
+                    <Button Content="²√x" Click="SquareRoot_Click"/>
+                    <Button Content="/" Click="Operator_Click"/>
+
+                    <Button Content="7" Click="Button_Click"/>
+                    <Button Content="8" Click="Button_Click"/>
+                    <Button Content="9" Click="Button_Click"/>
+                    <Button Content="X" Click="Operator_Click"/>
+
+                    <Button Content="4" Click="Button_Click"/>
+                    <Button Content="5" Click="Button_Click"/>
+                    <Button Content="6" Click="Button_Click"/>
+                    <Button Content="-" Click="Operator_Click"/>
+
+                    <Button Content="1" Click="Button_Click"/>
+                    <Button Content="2" Click="Button_Click"/>
+                    <Button Content="3" Click="Button_Click"/>
+                    <Button Content="+" Click="Operator_Click"/>
+
+                    <Button Content="+/-" Click="Operator_Click"/>
+                    <Button Content="0" Click="Button_Click"/>
+                    <Button Content="." Click="Operator_Click"/>
+                    <Button Content="=" Click="Result_Click" Background="#0078D7" Foreground="White"/>
+
+                </UniformGrid>
             </Grid>
+        </Grid>
+
+        <!-- 프로그래머 UI -->
+        <Grid>
+
+        </Grid>
+        <!-- 프로그래머 UI 끝-->
     </Grid>
 </Window>
