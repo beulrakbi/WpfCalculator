@@ -245,12 +245,12 @@
                                  Columns="6"
                                  Margin="3"
                                  Width="290">
-                        <Button Content="MC" />
-                        <Button Content="MR" />
-                        <Button Content="M+" />
-                        <Button Content="M-" />
-                        <Button Content="MS" />
-                        <Button Content="M▽" />
+                        <Button Content="MC" Click="MemoryButton_Click" x:Name="ButtonMC"/>
+                        <Button Content="MR" Click="MemoryButton_Click" x:Name="ButtonMR"/>
+                        <Button Content="M+" Click="MemoryButton_Click" />
+                        <Button Content="M-" Click="MemoryButton_Click" />
+                        <Button Content="MS" Click="MemoryButton_Click" />
+                        <Button Content="M▽" Click="MemoryDropdown_Click" x:Name="ButtonM" />
                     </UniformGrid>
                 </StackPanel>
 
@@ -292,6 +292,36 @@
                     <Button Content="=" Click="Result_Click" Background="#0078D7" Foreground="White"/>
 
                 </UniformGrid>
+
+                <Border x:Name="MemoryPanel"
+                        Grid.Row="0"
+                        Grid.RowSpan="2"
+                        Width="320"
+                        Height="300"
+                        HorizontalAlignment="Center"
+                        Background="White"
+                        Panel.ZIndex="1"
+                        Visibility="Collapsed"
+                        VerticalAlignment="Bottom">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="MemoryStackPanel">
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <Button Grid.Row="1"
+                                Content="Clear All Memory"
+                                Click="ClearAllMemory_Click"
+                                HorizontalAlignment="Right"
+                                Margin="30, 10"
+                                Background="Transparent"/>
+                    </Grid>
+                </Border>
             </Grid>
 
         </Grid>
@@ -390,7 +420,7 @@
                 <Button Content="7" Click="ProgrammerButton_Click"/>
                 <Button Content="8" Click="ProgrammerButton_Click"/>
                 <Button Content="9" Click="ProgrammerButton_Click"/>
-                <Button Content="X" Click="ProgrammerOperator_Click"/>
+                <Button Content="*" Click="ProgrammerOperator_Click"/>
 
                 <Button Content="D" Click="ProgrammerButton_Click"/>
                 <Button Content="4" Click="ProgrammerButton_Click"/>

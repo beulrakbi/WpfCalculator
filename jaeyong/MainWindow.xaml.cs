@@ -18,23 +18,25 @@ namespace test
     /// </summary>
     public partial class MainWindow : Window
     {
-        private double currentValue = 0; 
-        private string currentOperator = ""; 
-        private bool isNewEntry = false; 
+        //표준 =============
+        private double currentValue = 0;
+        private string currentOperator = "";
+        private bool isNewEntry = false;
         private bool isSidebarOpen = false;
         private string currentExpression = "";
         private double memoryValue = 0;
+        private List<double> memoryList = new List<double>();
 
         //프로그래머 ========
         private long programmerCurrentValue = 0;
         private string programmerCurrentOperator = "";
-
 
         private int currentBase = 16;
 
         public MainWindow()
         {
             InitializeComponent();
+            UpdateMemoryButtonState();
         }
         //숫자 버튼
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -69,32 +71,32 @@ namespace test
                 {
                     if (string.IsNullOrEmpty(currentOperator))
                     {
-                        currentValue = newValue; 
+                        currentValue = newValue;
                     }
                     else
                     {
                         currentExpression += ResultDisplay.Text;
-                        Calculate(newValue); 
+                        Calculate(newValue);
                     }
                 }
 
                 currentOperator = newOperator;
-                isNewEntry = true; 
+                isNewEntry = true;
 
                 if (currentOperator == "%")
                 {
                     double percentageValue = currentValue * (newValue / 100);
                     Calculate(percentageValue);
                     currentOperator = "";
-                    currentExpression = ""; 
+                    currentExpression = "";
                 }
                 else
                 {
-                    
+
                     currentExpression = currentValue.ToString() + $" {currentOperator} ";
                 }
 
-                
+
                 ExpressionDisplay.Text = currentExpression;
             }
         }
@@ -144,7 +146,7 @@ namespace test
         // 계산 결과
         private void Result_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (double.TryParse(ResultDisplay.Text, out double newValue))
             {
                 string finalEquation = currentExpression + ResultDisplay.Text + " =";
@@ -170,6 +172,8 @@ namespace test
             ResultDisplay.Text = "0";
             ExpressionDisplay.Text = "";
             isNewEntry = true;
+
+            UpdateMemoryButtonState();
         }
 
         // 초기화 ( CE )
@@ -327,6 +331,20 @@ namespace test
             }
 
         }
+
+        private void ClearAllMemory_Click(object sender, RoutedEventArgs e) // 이 이름!
+        {
+            memoryList.Clear();
+
+            memoryValue = 0;
+
+            RefreshMemoryListUI();
+            UpdateDefaultStyle();
+            MemoryPanel.Visibility = Visibility.Collapsed;
+        }
+
+        
+
 
 
         //====================== programmer button ====================
@@ -509,9 +527,9 @@ namespace test
                     programmerCurrentValue = newValue;
                 }
 
-               
+
                 programmerCurrentOperator = newOperator;
-                isNewEntry = true; 
+                isNewEntry = true;
 
                 ProgrammerExpressionDisplay.Text = $"{programmerCurrentValue} {programmerCurrentOperator} ";
             }
@@ -556,9 +574,9 @@ namespace test
                     case 10:
                         style = System.Globalization.NumberStyles.Integer; // 10진수
                         break;
-                    case 8: 
-                    case 2: 
-                        BigInteger baseValue = ParseCustomBase(input, old);
+                    case 8:
+                    case 2:
+                        BigInteger baseValue = ParseCustomBase(input, oldBase);
                         string outputCustom = ConvertBigIntegerToBase(baseValue, targetBase);
                         displayTextBox.Text = outputCustom;
                         currentBase = targetBase;
@@ -666,6 +684,54 @@ namespace test
         }
 
 
+        private void MemoryDropdown_Click(object sender, RoutedEventArgs e)
+        {
+            bool isVisible = (MemoryPanel.Visibility == Visibility.Visible);
+
+            if (isVisible)
+            {
+                MemoryPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // 목록을 표시하기 전에 항상 최신 상태로 업데이트
+                RefreshMemoryListUI();
+                MemoryPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+
+        private void RefreshMemoryListUI()
+        {
+            MemoryStackPanel.Children.Clear();
+
+            if (memoryList.Count == 0)
+            {
+                // 메모리가 비어있음을 알리는 텍스트
+                MemoryStackPanel.Children.Add(new TextBlock
+                {
+                    Text = "저장된 메모리가 없습니다.",
+                    Margin = new Thickness(10),
+                    Foreground = Brushes.Gray
+                });
+                return;
+            }
+            foreach (double memoryItem in memoryList)
+            {
+                // 메모리 목록 항목 UI 생성 (TextBox 또는 Button 형태)
+                Button memoryButton = new Button
+                {
+                    Content = memoryItem.ToString(),
+                    FontSize = 18,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Margin = new Thickness(10, 5, 10, 5),
+                    Background = Brushes.LightYellow, 
+                    Tag = memoryItem 
+                };
+                MemoryStackPanel.Children.Add(memoryButton);
+            }
+        }
+
 
         private void UpdateProgrammerButtons()
         {
@@ -717,6 +783,94 @@ namespace test
         }
 
 
+        private void MemoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button == null) return;
 
+            string memoryOperation = button.Content.ToString();
+
+            if (memoryOperation == "M▽")
+            {
+                if (MemoryPanel.Visibility == Visibility.Collapsed)
+                {
+                    RefreshMemoryListUI();
+                    MemoryPanel.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    MemoryPanel.Visibility = Visibility.Collapsed;
+                }
+                HistoryPanel.Visibility = Visibility.Collapsed;
+                isSidebarOpen = false; // 사이드바 상태 업데이트
+                SidebarPanel.Visibility = Visibility.Collapsed;
+
+                return; 
+            }
+
+            if (double.TryParse(ResultDisplay.Text, out double displayValue))
+            {
+                switch (memoryOperation)
+                {
+                    case "MC":
+                        memoryValue = 0;
+                        memoryList.Clear();
+                        break;
+                    case "MR":
+                        ResultDisplay.Text = memoryValue.ToString();
+                        isNewEntry = true;
+                        break;
+                    case "M+":
+                        memoryValue += displayValue;
+                        break;
+                    case "M-":
+                        memoryValue -= displayValue;
+                        break;
+                    case "MS": 
+                        memoryValue = displayValue;
+                        RefreshMemoryListUI();
+                        memoryList.Insert(0, displayValue); // 리스트의 맨 앞에 추가
+                        isNewEntry = true;
+                        break;
+                   
+                }
+                RefreshMemoryListUI();
+                UpdateMemoryButtonState();
+            }
+            if (memoryOperation != "MR" && memoryOperation != "M▽")
+            {
+                ExpressionDisplay.Text = "";
+                currentOperator = "";
+                currentValue = 0;
+            }
+        }
+
+
+
+        private void UpdateMemoryButtonState()
+        {
+            // 메모리 값이 0이 아니면 MC, MR 버튼 활성화
+            bool hasMemory = memoryValue != 0 || memoryList.Count > 0;
+
+            ButtonMR.IsEnabled = hasMemory;
+            ButtonMC.IsEnabled = hasMemory;
+            if (ButtonMC != null)
+                ButtonMC.IsEnabled = hasMemory;
+
+            if (ButtonMR != null)
+                ButtonMR.IsEnabled = hasMemory;
+
+            if (ButtonM != null)
+            {
+                ButtonM.IsEnabled = hasMemory;
+            }
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+
 }
